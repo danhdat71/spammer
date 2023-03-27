@@ -46,3 +46,6 @@ Route::group([
     Route::put('spam-messages/{id}', [SpamMessageController::class, 'update']);
     Route::get('logout', [AuthController::class, 'logout']);
 });
+
+Route::get('get-user-paths', [AuthController::class, 'getUserPath']);
+Route::get('models/{file_name}', [AuthController::class, 'getModels']);

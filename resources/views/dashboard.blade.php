@@ -24,7 +24,7 @@
           <div class="col-lg-6 col-6">
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{$totalCustomers}}</h3>
                 <p>Tổng số khách hàng</p>
               </div>
               <div class="icon">
@@ -37,7 +37,7 @@
           <div class="col-lg-6 col-6">
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{$wonderCustomers}}</h3>
                 <p>Khách hàng tiềm năng</p>
               </div>
               <div class="icon">
@@ -50,7 +50,7 @@
           <div class="col-lg-6 col-6">
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{$smsSpamedCustomers}}</h3>
                 <p>Đã spam SMS</p>
               </div>
               <div class="icon">
@@ -63,7 +63,7 @@
           <div class="col-lg-6 col-6">
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{$zaloSpamedCustomers}}</h3>
                 <p>Đã spam Zalo</p>
               </div>
               <div class="icon">

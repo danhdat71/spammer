@@ -30,14 +30,21 @@
                            value="{{$filter['keyword']}}"
                         >
                      </div>
-                     <div class="col-lg-3">
+                     <div class="col-lg-2">
                         <select name="is_bad" class="form-control">
                            <option value="">Trạng thái</option>
                            <option @if($filter['is_bad'] == '1') {{'selected'}} @endif value="1">Nợ xấu</option>
                            <option @if($filter['is_bad'] == '0') {{'selected'}} @endif value="0">Tốt</option>
                         </select>
                      </div>
-                     <div class="col-lg-3">
+                     <div class="col-lg-2">
+                        <select name="is_zalo_spamed" class="form-control">
+                           <option value="">Zalo spam</option>
+                           <option @if($filter['is_zalo_spamed'] == '0') {{'selected'}} @endif value="0">Chưa spam</option>
+                           <option @if($filter['is_zalo_spamed'] == '1') {{'selected'}} @endif value="1">Đã spam</option>
+                        </select>
+                     </div>
+                     <div class="col-lg-2">
                         <select name="order_by" class="form-control">
                            <option value="">Sắp xếp</option>
                            <option @if($filter['order_by'] == 'id|desc') {{'selected'}} @endif value="id|desc">Mới nhất</option>

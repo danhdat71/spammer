@@ -14,6 +14,7 @@
     <div class="wrap-all">
         <div class="wrap-background">
             <img src="https://t3.ftcdn.net/jpg/02/81/48/32/360_F_281483212_fafo0892wj9fOuR6V3NOLMuXkMSWVNJ1.jpg" alt="">
+            <video id="video" autoplay>
         </div>
         <div class="filter-blur"></div>
         <div class="wrap-login">
@@ -55,4 +56,6 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/http.js"></script>
+<script src="vendor/faceapi/index.js"></script>
+<script src="js/facelogin.js"></script>
 </html>

@@ -66,6 +66,9 @@ class CustomerController extends Controller
         ->when(!is_null($request['is_bad']), function($q) use($request) {
             $q->where('is_bad', $request['is_bad']);
         })
+        ->when(!is_null($request['is_zalo_spamed']), function($q) use($request) {
+            $q->where('is_zalo_spamed', $request['is_zalo_spamed']);
+        })
         ->when(!is_null($request['order_by']), function($q) use($request) {
             $orderBy = explode('|', $request['order_by']);
             $q->orderBy($orderBy[0], $orderBy[1]);
@@ -126,6 +129,7 @@ class CustomerController extends Controller
         return [
             'keyword' => $request['keyword'] ?? '',
             'is_bad' => $request['is_bad'] ?? '',
+            'is_zalo_spamed' => $request['is_zalo_spamed'] ?? '',
             'order_by' => $request['order_by'] ?? ''
         ];
     }
