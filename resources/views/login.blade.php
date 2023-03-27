@@ -21,16 +21,19 @@
                 <img src="img/fixed/login.png" alt="login">
             </div>
             <div class="main">
-                <form action="" method="post">
+                <form id="form-login" method="post">
                     <div class="field-item">
                         <div class="icon"><i class="fa-solid fa-user"></i></div>
-                        <input type="text" placeholder="Email Identifier" required>
+                        <input name="username" type="text" placeholder="Identifier" required>
                     </div>
                     <div class="field-item">
                         <div class="icon"><i class="fa-solid fa-lock"></i></div>
-                        <input type="password" placeholder="Password" required>
+                        <input name="password" type="password" placeholder="Password" required>
                     </div>
                 </form>
+                <div class="wrap-message">
+                    <span></span>
+                </div>
             </div>
             <div class="bottom">
                 <div class="login-submit" id="submit-login-form">
@@ -46,4 +49,10 @@
     </div>
 
 </body>
+<script>
+    let csrf = '{{csrf_token()}}';
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/http.js"></script>
 </html>

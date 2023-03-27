@@ -9,22 +9,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="vendor/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="vendor/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="vendor/admin-lte/plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="vendor/admin-lte/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="vendor/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="vendor/admin-lte/plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="vendor/admin-lte/plugins/summernote/summernote-bs4.min.css">
+  <!-- Bootsrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Styles -->
   <link rel="stylesheet" href="css/global.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -46,14 +37,17 @@
         <a href="index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="#" data-bs-target="#spam-messages" data-bs-toggle="modal" class="nav-link">Tin nhắn spam</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" data-bs-target="#format-data" data-bs-toggle="modal" class="nav-link">Định dạng dữ liệu</a>
       </li>
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+        <a class="nav-link" href="logout">
           Đăng xuất
         </a>
       </li>
@@ -73,27 +67,33 @@
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="vendor/admin-lte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="img/profile/thuybinh.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Thúy Bình</a>
         </div>
       </div>
 
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="dashboard" class="nav-link active">
+            <a
+              href="dashboard"
+              class="nav-link @if($slide == 'dashboard') {{'active'}} @endif"
+            >
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Tổng quan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="customers" class="nav-link">
+            <a
+              href="customers"
+              class="nav-link @if($slide == 'customers') {{'active'}} @endif"
+            >
               <i class="nav-icon fa-solid fa-users"></i>
               <p>
                 Khách hàng
-                <span class="badge badge-info right">100.000</span>
+                <span class="badge badge-info right">{{$customerCount}}</span>
               </p>
             </a>
           </li>
@@ -121,13 +121,80 @@
     </div>
   </footer>
 
+  <div class="modals">
+    <div
+      class="modal fade"
+      id="spam-messages"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Danh sách tin nhắn spam</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            @foreach ($spamMessages as $message)
+              <div class="pb-2">
+                <label for="">Tin nhắn spam</label>
+                <textarea
+                  data-id="{{$message->id}}"
+                  class="form-control spam-message-input"
+                  rows="8"
+                >{{$message->message}}</textarea>
+              </div>
+            @endforeach
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="format-data"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" style="max-width:1100px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Định dạng dữ liệu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-6">
+                <textarea class="form-control" id="before-convert" rows="20"></textarea>
+              </div>
+              <div class="col-6">
+                <textarea class="form-control" id="after-convert" rows="20"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="convert-button" type="button" class="btn btn-info">Chuyển đổi + Copy</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 
-<script src="vendor/admin-lte/plugins/jquery/jquery.min.js"></script>
-<script src="vendor/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/admin-lte/plugins/summernote/summernote-bs4.min.js"></script>
+<script>
+  let csrf = '{{csrf_token()}}';
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 <script src="vendor/admin-lte/dist/js/adminlte.js"></script>
-
+<script src="js/http.js"></script>
 </body>
 </html>

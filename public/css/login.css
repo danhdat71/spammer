@@ -147,3 +147,9 @@ html, * {
 .login-submit:hover {
     transform: translateY(2px);
 }
+
+.wrap-message {
+    width: 60%;
+    padding-top: 10px;
+    color: #7b1212;
+}
