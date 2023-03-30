@@ -25,7 +25,7 @@
                 <form id="form-login" method="post">
                     <div class="field-item">
                         <div class="icon"><i class="fa-solid fa-user"></i></div>
-                        <input name="username" type="text" placeholder="Identifier" required>
+                        <input id="username" name="username" type="text" placeholder="Identifier" required>
                     </div>
                     <div class="field-item">
                         <div class="icon"><i class="fa-solid fa-lock"></i></div>

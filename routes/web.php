@@ -19,14 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/', function () {
-    return view('login');
-});
-
+Route::get('/', [AuthController::class, 'loginView']);
 Route::post('login', [AuthController::class, 'login'])->middleware('throttle:login_limit');
 Route::get('login', [AuthController::class, 'loginView']);
 Route::post('face-login', [AuthController::class, 'faceLogin']);

@@ -16,9 +16,15 @@ class CreateAdminSeeder extends Seeder
     public function run()
     {
         User::create([
-            'username' => 'lethuybinh211',
+            'username' => 'lethuybinh',
             'password' => Hash::make('12345678'),
             'name' => 'Lê Thị Thúy Bình'
+        ]);
+
+        User::create([
+            'username' => 'danhdat',
+            'password' => Hash::make('12345678'),
+            'name' => 'Danh Đạt'
         ]);
     }
 }

@@ -17,12 +17,17 @@ class CustomerImport implements ToCollection
     {
         foreach ($rows as $row)
         {
-            Customer::firstOrCreate([
-                'name' => $row[0],
-                'cccd' => $row[1] ?? "",
-                'phone' => $row[2],
-                'address' => $row[3] ?? ""
-            ]);
+            if (!empty($row[2])) {
+                Customer::firstOrCreate(
+                    ['phone' => $row[2]],
+                    [
+                        'name' => $row[0],
+                        'cccd' => $row[1] ?? '',
+                        'phone' => $row[2],
+                        'address' => $row[3] ?? '',
+                    ]
+                );
+            }
         }
     }
 }

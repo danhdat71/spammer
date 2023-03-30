@@ -120,7 +120,7 @@
                            </td>
                            <td>
                               <button
-                                 data-zalo-url="{{env('ZALO_URL')}}/{{$customer->phone}}"
+                                 data-zalo-url="{{env('ZALO_URL')}}/@if(($customer->phone)[0] != '0' || (($customer->phone)[0] != '8') && ($customer->phone)[1] != '4'){{'0'.$customer->phone}} @else{{$customer->phone}}@endif"
                                  data-id="{{$customer->id}}"
                                  class="btn btn-sm bg-info open-customer-zalo"
                               >

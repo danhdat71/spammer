@@ -230,9 +230,17 @@ $('#convert-button').click(function(){
     var lines = $('#before-convert').val().split('\n');
     let result = '';
     for(var i = 0; i < lines.length; i++){
+
+      // For phone
       let phoneNumber = lines[i].replace(/\D/g, '');
+      phoneNumber = phoneNumber.replace('.', '');
+      phoneNumber = phoneNumber.trim();
+
+      //For name
       let customerName = lines[i].replace(/[0-9]/g, '');
       customerName = customerName.replace('- [ ] ', '');
+      customerName = customerName.replace('.', '');
+      customerName = customerName.trim();
 
       if (phoneNumber != '') {
         result += customerName + '\t' + phoneNumber + '\n';

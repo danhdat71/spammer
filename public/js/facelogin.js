@@ -4,12 +4,18 @@ const size = {
 };
 
 var videoStream = document.getElementById('video');
+let labels = [];
 
-Promise.all([
+let promiseFaceApi = Promise.all([
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
     faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-]).then(openCamera).then(mainProcess);
+]).then(getUserModels);
+
+$('#submit-login-face').click(function(){
+    promiseFaceApi.then(openCamera).then(mainProcess);
+});
+
 
 function openCamera()
 {
@@ -24,20 +30,38 @@ function openCamera()
 let lastPersonName = '';
 async function mainProcess()
 {
-    console.log('working...');
+    console.log('face api initialled !!!');
     let loadAllFaces = await loadAllPerson();
     let faceMatcher = new faceapi.FaceMatcher(loadAllFaces, 0.6);
 
-    let interval = setInterval(async function(){
+    setInterval(async function(){
         const detections = await faceapi.detectAllFaces(videoStream).withFaceLandmarks().withFaceDescriptors();
         const resizedDetections = faceapi.resizeResults(detections, size);
         const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
-        results.forEach((result, i) => {
+        results.forEach(async (result, i) => {
             let currentPersonName = result.toString().replace(/[0-9]/g, '').replace('(.)', '').trim();
             if (currentPersonName != "unknown" && lastPersonName != currentPersonName) {
                 console.log(`Call api đăng nhập cho ${currentPersonName}`);
+                $('#username').val(currentPersonName);
+
+                let formData = new FormData();
+                formData.append('username', currentPersonName);
+
+                let res = await fetch('face-login', {
+                    method: 'post',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': csrf,
+                    },
+                });
+                res = await res.json();
+                
+                if (res.status) {
+                    location.href = 'dashboard';
+                } else {
+                    sAlert(false, res.message);
+                }
             }
-            console.log(currentPersonName);
             if (currentPersonName != "unknown") {
                 lastPersonName = currentPersonName;
             }
@@ -45,9 +69,21 @@ async function mainProcess()
     }, 1000);
 }
 
-function loadAllPerson() 
+async function getUserModels()
 {
-    const labels = ['thuybinh'];
+    let url = 'get-user-paths';
+    let res = await fetch(url);
+    let data = await res.json();
+    data = await data.data;
+
+    labels = data.map(function(val, i){
+        return val.username;
+    });
+    console.log(labels);
+}
+
+async function loadAllPerson() 
+{
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
@@ -59,16 +95,6 @@ function loadAllPerson()
             return new faceapi.LabeledFaceDescriptors(label, descriptions);
         })
     );
-}
-
-function getUserModels()
-{
-    let basePath = `img/profile/`;
-    let url = 'get-user-paths';
-
-    ajax(url, 'get', null, null, function(results) {
-        console.log(results);
-    });
 }
 
 // function captureImageIfDetected()
