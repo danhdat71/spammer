@@ -15,6 +15,7 @@ class CreateSpamMesssageSeeder extends Seeder
      */
     public function run()
     {
+        SpamMessage::truncate();
         $now = Carbon::now()->toDateTimeString();
         $messages = [
             [

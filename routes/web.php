@@ -19,6 +19,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function() {
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST', 'https://control.msg91.com/api/v5/flow/',
+        [
+            'body' => '{"template_id":"6425ab37d6fc056d4d406143","sender":"Shinhan","short_url":"0","mobiles":"84352026756","VAR1":"VALUE 1","VAR2":"VALUE 2"}',
+            'headers' => [
+                'accept' => 'application/json',
+                'authkey' => '393675ATTmCOJKhWV6425aa30P1',
+                'content-type' => 'application/json',
+            ],
+        ]
+    );
+      
+    return $response->getBody();
+});
+
 Route::get('/', [AuthController::class, 'loginView']);
 Route::post('login', [AuthController::class, 'login'])->middleware('throttle:login_limit');
 Route::get('login', [AuthController::class, 'loginView']);

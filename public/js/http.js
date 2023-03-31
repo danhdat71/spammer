@@ -59,6 +59,7 @@ $('.open-customer-zalo').click(function(){
     let _this = $(this);
     let id = $(this).attr('data-id');
     let zaloUrl = $(this).attr('data-zalo-url');
+    let zaloPhone = $(this).attr('data-zalo-phone');
     let url = `customers/${id}/status`;
     let putData = JSON.stringify({
         'is_zalo_spamed' : true
@@ -72,11 +73,11 @@ $('.open-customer-zalo').click(function(){
             } else {
                 sAlert(false, result.messages);
             }
+            navigator.clipboard.writeText(zaloPhone);
         },
         appJson
     );
-
-    window.open(zaloUrl,'_blank');
+    window.open(zaloUrl, '_blank');
 });
 
 /**
@@ -250,3 +251,4 @@ $('#convert-button').click(function(){
     $('#after-convert').val(result);
     navigator.clipboard.writeText(result);
 });
+
