@@ -30,7 +30,7 @@ class CustomerController extends Controller
      * @var int
      */
     protected $paginate = 20;
-    
+
     /**
      * importExcel
      *

@@ -26,10 +26,13 @@ class ViewShareProvider extends ServiceProvider
      */
     public function boot()
     {
-        $spamMessages = SpamMessage::all();
-        $customerCount = Customer::count();
+        view()->composer('*', function ($view)
+        {
+            $spamMessages = SpamMessage::all();
+            $customerCount = Customer::count();
 
-        View::share('spamMessages', $spamMessages);
-        View::share('customerCount', $customerCount);
+            View::share('spamMessages', $spamMessages);
+            View::share('customerCount', $customerCount);
+        });
     }
 }
